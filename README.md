@@ -116,7 +116,7 @@ fastboot oem device-info
 
 ## 五、刷机工具与固件
 
-一加 13 没有像小米那种官方线刷工具，只有社区制作的刷机工具：
+一加没有像小米那种官方线刷工具，只有社区制作的刷机工具：
 
 - 社区刷机工具：<https://roms.danielspringer.at/index.php?dir=Oneplus+13%2FSuper+Flashers>
 
@@ -154,9 +154,9 @@ fastboot flash recovery recovery.img
 
 ---
 
-## 八、获取 Root（SukiSU Ultra）
+## 八、获取 Root
 
-**推荐方案：[SukiSU Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra)**（基于 KernelSU 的内核级 Root，支持一加 13）。
+**一加13推荐：[SukiSU Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra)**（基于 KernelSU 的内核级 Root，支持一加 13）。
 
 - 官方文档（中文）：<https://github.com/SukiSU-Ultra/SukiSU-Ultra/blob/main/docs/zh/README.md>
 - 图文教程参考：<https://m.romjd.com/jiaocheng/content/27954>
@@ -173,14 +173,25 @@ fastboot flash recovery recovery.img
 
 4. 重启，安装 SukiSU Ultra 管理器 App 完成配置。
 
-> 其他 Root 方案（备选，了解即可）：[APatch](https://apatch.dev/zh_CN/install.html)
+** SukiSU Ultra需要GKI内核，不支持一加8，一加8推荐：[APatch](https://apatch.dev/zh_CN/install.html)**
 
 ---
 
 ## 九、Root 后常用模块
 
+
 - **ReZygisk** —— Zygisk 实现：<https://github.com/PerformanC/ReZygisk>
+Zygisk 环境（底层搬运工）： 它是运行在 C/C++ 层面（Native 层）的底层通道。它只负责一件事——把你的模块“偷运”进 App 的进程里。它本身并不擅长去修改安卓的 Java 逻辑。
+
 - **LSPosed**（JingMatrix 维护版）：<https://github.com/JingMatrix/LSPosed> ，使用说明：<https://v2ex.com/t/1064160>
+LSPosed 环境（Java 层手术刀）： 它是基于 Zygisk 运行的。Zygisk 把 LSPosed 偷运进微信之后，LSPosed 就开始大展神威，它专门负责去修改（Hook）App里的 Java/Kotlin 代码逻辑。
+
+Zygisk 只是开了个门；LSPosed 则是走进去对代码做外科手术的医生。你只有先装了 ZygiskNext 开门，才能装 LSPosed 进去做手术。
+
+- **MagiskHluda**
+https://github.com/Exo1i/MagiskHluda （旧版）
+https://github.com/cergo666/MagiskHluda （fork中最新的）
+
 - **Thanox** —— 应用管控 / 后台治理：<https://github.com/Tornaco/Thanox>
 
 ---
