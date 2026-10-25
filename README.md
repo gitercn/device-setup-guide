@@ -1,10 +1,12 @@
-# 一加 13 选购与刷机 / Root 指南
+# 装机与刷机指南
 
-> 本指南针对**中国版 PJZ110（ColorOS）**。
+> 个人设备的装机 / 刷机流程记录：**手机（一加 13）** 与 **电脑（Windows 11）**。
 >
-> 固件版本、熔断状态、救砖直链等信息均有时效性，记录于 **2026-06** 前后，使用前请自行核对最新情况（直链尤其可能失效）。
+> 固件版本、熔断状态、救砖直链、软件包名等信息均有时效性，记录于 **2026** 年前后，使用前请自行核对最新情况（直链尤其可能失效）。
 
 ## 目录
+
+**第一部分 · 手机：一加 13 选购与刷机 / Root**
 
 - [一、选购建议](#一选购建议)
 - [二、前置准备](#二前置准备)
@@ -13,15 +15,27 @@
 - [五、刷机工具与固件](#五刷机工具与固件)
 - [六、9008 救砖与熔断规避](#六9008-救砖与熔断规避)
 - [七、刷入 Recovery](#七刷入-recovery)
-- [八、获取 Root（推荐 SukiSU Ultra）](#八获取-rootsukisu-ultra)
+- [八、获取 Root](#八获取-root)
 - [九、Root 后常用模块](#九root-后常用模块)
 - [十、TEE / 密钥状态说明](#十tee--密钥状态说明)
-- [十一、精简 ColorOS（Debloat）](#十一精简-coloros)
+- [十一、精简 ColorOS](#十一精简-coloros)
 - [十二、推荐 App 与技巧](#十二推荐-app-与技巧)
 - [十三、刷回官方 / 重新上锁](#十三刷回官方--重新上锁)
 - [致谢与来源](#致谢与来源)
 
+**第二部分 · 电脑：Windows 11 全新安装与配置**
+
+- [一、系统镜像下载](#一系统镜像下载)
+- [二、Scoop 装机脚本](#二scoop-装机脚本)
+- [三、Ungoogled Chromium 配置](#三ungoogled-chromium-配置)
+- [四、Everything 与 7z 右键菜单](#四everything-与-7z-右键菜单)
+- [五、系统优化工具](#五系统优化工具)
+
 ---
+
+# 第一部分 · 手机：一加 13 选购与刷机 / Root 指南
+
+> 本部分针对**中国版 PJZ110（ColorOS）**。
 
 ## 一、选购建议
 
@@ -156,7 +170,7 @@ fastboot flash recovery recovery.img
 
 ## 八、获取 Root
 
-**一加13推荐：[SukiSU Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra)**（基于 KernelSU 的内核级 Root，支持一加 13）。
+**一加 13 推荐：[SukiSU Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra)**（基于 KernelSU 的内核级 Root，支持一加 13）。
 
 - 官方文档（中文）：<https://github.com/SukiSU-Ultra/SukiSU-Ultra/blob/main/docs/zh/README.md>
 - 图文教程参考：<https://m.romjd.com/jiaocheng/content/27954>
@@ -173,24 +187,25 @@ fastboot flash recovery recovery.img
 
 4. 重启，安装 SukiSU Ultra 管理器 App 完成配置。
 
-** SukiSU Ultra需要GKI内核，不支持一加8，一加8推荐：[APatch](https://apatch.dev/zh_CN/install.html)**
+> **注意**：SukiSU Ultra 需要 GKI 内核，**不支持一加 8**。一加 8 推荐用 [APatch](https://apatch.dev/zh_CN/install.html)。
 
 ---
 
 ## 九、Root 后常用模块
 
-
 - **ReZygisk** —— Zygisk 实现：<https://github.com/PerformanC/ReZygisk>
-Zygisk 环境（底层搬运工）： 它是运行在 C/C++ 层面（Native 层）的底层通道。它只负责一件事——把你的模块“偷运”进 App 的进程里。它本身并不擅长去修改安卓的 Java 逻辑。
+
+  Zygisk 环境（底层搬运工）：它是运行在 C/C++ 层面（Native 层）的底层通道。它只负责一件事——把你的模块「偷运」进 App 的进程里。它本身并不擅长去修改安卓的 Java 逻辑。
 
 - **LSPosed**（JingMatrix 维护版）：<https://github.com/JingMatrix/LSPosed> ，使用说明：<https://v2ex.com/t/1064160>
-LSPosed 环境（Java 层手术刀）： 它是基于 Zygisk 运行的。Zygisk 把 LSPosed 偷运进微信之后，LSPosed 就开始大展神威，它专门负责去修改（Hook）App里的 Java/Kotlin 代码逻辑。
 
-Zygisk 只是开了个门；LSPosed 则是走进去对代码做外科手术的医生。你只有先装了 ZygiskNext 开门，才能装 LSPosed 进去做手术。
+  LSPosed 环境（Java 层手术刀）：它是基于 Zygisk 运行的。Zygisk 把 LSPosed 偷运进微信之后，LSPosed 就开始大展神威，它专门负责去修改（Hook）App 里的 Java/Kotlin 代码逻辑。
+
+  Zygisk 只是开了个门；LSPosed 则是走进去对代码做外科手术的医生。你只有先装了 Zygisk 开门，才能装 LSPosed 进去做手术。
 
 - **MagiskHluda**
-https://github.com/Exo1i/MagiskHluda （旧版）
-https://github.com/cergo666/MagiskHluda （fork中最新的）
+  - 旧版：<https://github.com/Exo1i/MagiskHluda>
+  - fork 中较新的：<https://github.com/cergo666/MagiskHluda>
 
 - **Thanox** —— 应用管控 / 后台治理：<https://github.com/Tornaco/Thanox>
 
@@ -198,7 +213,8 @@ https://github.com/cergo666/MagiskHluda （fork中最新的）
 
 ## 十、TEE / 密钥状态说明
 
-> **重要**：解锁 Bootloader 后，部分硬件级密钥会失效（见下表 `SOTER / Attestation / RKP` 由「成功」变「失败」）。但除了SOTER key之外，其他几个可以修复。SOTER key是腾讯的，目前只影响微信指纹支付。。
+> **重要**：解锁 Bootloader 后，部分硬件级密钥会失效（见下表 `SOTER / Attestation / RKP` 由「成功」变「失败」）。但除了 SOTER key 之外，其他几个可以修复。SOTER key 是腾讯的，目前只影响微信指纹支付。
+
 ### 解锁前 Key 状态
 
 | Key | 状态 |
@@ -311,14 +327,12 @@ am start-user 11
 >
 > - 刷回官方：用 [社区刷机工具](#五刷机工具与固件) 或 [9008 救砖](#六9008-救砖与熔断规避) 刷入完整官方全量包。
 > - 重新上锁：`fastboot flashing lock`（**会再次清空数据**；务必先刷回完全原厂状态，否则可能无法开机）。
->
-
 
 ---
 
 ## 致谢与来源
 
-本指南整理自社区资料，感谢以下作者与项目：
+本部分整理自社区资料，感谢以下作者与项目：
 
 - [salokrwhite/OplusEdlTool](https://github.com/salokrwhite/OplusEdlTool)
 - [SukiSU-Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra)
@@ -330,3 +344,101 @@ am start-user 11
 - [danielspringer.at Super Flashers](https://roms.danielspringer.at/)
 - [xlucn/oh-my-foss-android](https://github.com/xlucn/oh-my-foss-android)
 - XDA Forums、[wuxianlin.com](https://wuxianlin.com/) 等社区分享
+
+---
+
+# 第二部分 · 电脑：Windows 11 全新安装与配置
+
+> 记录一台新机器从装系统到常用软件就位的流程。偏个人习惯，命令按需增删。
+
+## 一、系统镜像下载
+
+- [RG-Adguard](https://files.rg-adguard.net/version/f0bd8307-d897-ef77-dbd6-216fefbe94c5) —— 微软服务器直链聚合，可选版本 / 语言 / 架构
+- [Massgrave](https://massgrave.dev/windows_11_links.html) —— 各版本官方 ISO 直链清单
+
+当前在用的镜像：
+
+```
+zh-cn_windows_11_business_editions_version_23h2_updated_jan_2024_x64_dvd_fee59269.iso
+```
+
+> Business 版（专业版 / 企业版）比 Consumer 版少一批预装的消费级应用，装完更干净。
+
+## 二、Scoop 装机脚本
+
+Scoop 装在用户目录下，全程不需要管理员权限，重装系统后恢复环境最省事。整段按顺序执行即可。
+
+```powershell
+# 1. 允许当前用户运行脚本，并安装 Scoop
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
+
+# 2. 下载加速与 git（bucket 依赖 git）
+scoop install aria2
+scoop install git
+scoop bucket add extras
+
+# 3. 常用软件
+scoop install synctrayzor
+scoop install beyondcompare
+scoop install everything vlc vscode keepassxc ungoogled-chromium idea-ultimate
+
+# 4. 环境自检
+scoop checkup
+
+# 5. sudo + 解除 260 字符路径限制
+scoop install sudo
+sudo Set-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem' -Name 'LongPathsEnabled' -Value 1
+
+# 6. 版本管理 / Python 环境
+scoop install nvm mambaforge
+conda init powershell
+```
+
+几点说明：
+
+- `aria2` 装好后 Scoop 会自动用它做多线程下载，拉大包明显更快。
+- `synctrayzor` 是 Syncthing 的托盘壳；`beyondcompare` 做文件 / 目录对比。
+- `LongPathsEnabled` 建议早点开，否则后面 `git clone` 深目录、编译 Node 原生模块时容易报路径过长。
+- `mambaforge` 上游已停止维护，新装机建议改用 Miniforge（装法同理）。
+- `conda init powershell` 只对当前用户生效，需要重开终端才生效。
+
+## 三、Ungoogled Chromium 配置
+
+装完是干净的，但有两件事要手动补：搜索引擎和扩展商店。
+
+- [添加 Google 搜索](https://github.com/ungoogled-software/ungoogled-chromium/discussions/1488)
+- [安装扩展（chromium-web-store）](https://github.com/NeverDecaf/chromium-web-store)
+
+**用户数据目录**：Scoop 装的 Chromium 默认把 `User Data` 放在 `%localappdata%` 下，`scoop update` 或卸载重装时配置容易丢。先确认实际位置：
+
+```
+chrome://version/
+```
+
+再把目录重定向到 Scoop 的 persist 目录（`<username>` 换成自己的用户名）：
+
+```cmd
+mklink /D "%localappdata%\Chromium\User Data" "C:\Users\<username>\scoop\persist\ungoogled-chromium\User Data"
+```
+
+最后改快捷方式的目标，把数据目录固定下来：
+
+```
+"C:\Users\<username>\scoop\apps\ungoogled-chromium\current\chrome.exe" --user-data-dir="C:\Users\<username>\scoop\apps\ungoogled-chromium\current\User Data" --single-argument %1
+```
+
+参考：<https://github.com/ScoopInstaller/Extras/issues/13975>
+
+## 四、Everything 与 7z 右键菜单
+
+Scoop 装的 7-Zip 不会自动注册右键菜单。用 Everything 搜 `7zfm.exe` 找到 7-Zip 的实际安装路径，再进 7-Zip 里设置文件关联 / 右键菜单。
+
+- [Scoop 使用笔记](https://hackettyu.com/2020/0507/windows-scoop/)
+
+## 五、系统优化工具
+
+- [Optimizer](https://github.com/hellzerg/optimizer) —— 关遥测、清右键菜单、开关系统服务，图形界面
+- [Sophia Script for Windows](https://github.com/farag2/Sophia-Script-for-Windows) —— 脚本化调优，粒度比 Optimizer 细
+
+> 两者都会改注册表，跑之前建议先建一个系统还原点。
